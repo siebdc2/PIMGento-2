@@ -186,7 +186,7 @@ class Import extends Factory
         $tmpTable = $this->_entities->getTableName($this->getCode());
         $familyAttributeRelationsTable = 'pimgento_family_attribute_relations';
 
-        $connection->addColumn($tmpTable, '_attribute_set_id', 'VARCHAR(255) NULL');
+        $connection->addColumn($tmpTable, '_attribute_set_id', 'TEXT NULL');
 
         $importTmpTable = $connection->select()->from($tmpTable, array('code', '_entity_id'));
         $queryTmpTable = $connection->query($importTmpTable);
