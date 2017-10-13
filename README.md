@@ -1,9 +1,10 @@
-# PIMGento
+# PIMGento2
 
-![alt text][logo]
-[logo]: http://i.imgur.com/q0sdWSs.png "PIMGento : "
+PIMGento2 is a Magento 2 extension that allows you to import your catalog from Akeneo CSV files into Magento.
 
-PIMGento is a Magento 2 extension that allows you to import your catalog from Akeneo CSV files into Magento.
+## Documentation
+
+PIMGento complete documentation is available [here](doc/summary.md).
 
 ## How it works
 
@@ -22,10 +23,11 @@ With PIMGento, you can import :
 ## Requirements
 
 * Akeneo PIM >= 1.3 (CE & EE)
+* Akeneo Enhanced Connector
 * Magento >= 2.0 CE & EE
 * Set local_infile mysql variable to TRUE
 * Database encoding must be UTF-8
-* Add "driver_options" key to Magento default connection configuration (app/etc/env.php)
+* Add "driver_options" key to Magento2 default connection configuration (app/etc/env.php)
 
 ```php
 'db' =>
@@ -46,70 +48,13 @@ With PIMGento, you can import :
   ),
 ```
 
-### Installation ###
+## Installation, Configuration and Usage
 
-Install module by Composer as follows:
-
-```shell
-composer require agencednd/module-pimgento
-```
-
-Enable and install module(s) in Magento:
-
-```shell
-# [Required] Import tools
-php bin/magento module:enable Pimgento_Import
-
-# [Required] Database features
-php bin/magento module:enable Pimgento_Entities
-
-# [Optional] Database logs (System > Pimgento > Log)
-php bin/magento module:enable Pimgento_Log
-
-# [Optional] Activate desired imports
-php bin/magento module:enable Pimgento_Category
-php bin/magento module:enable Pimgento_Family
-php bin/magento module:enable Pimgento_Attribute
-php bin/magento module:enable Pimgento_Option
-php bin/magento module:enable Pimgento_Variant
-php bin/magento module:enable Pimgento_Product
-```
-
-Check and update database setup:
-```shell
-php bin/magento setup:db:status
-php bin/magento setup:upgrade
-```
-
-Flush Magento caches
-```shell
-php bin/magento cache:flush
-```
-
-## Configuration and Usage
-
-* Configure your store language and currency before import
-* Launch import from admin panel in "System > Pimgento > Import"
-* After category import, set the "Root Category" for store in "Stores > Settings > All Stores"
-
-## Command line
-
-Launch import with command line:
-
-```shell
-php bin/magento pimgento:import --code=product --file=product.csv
-```
-
-## Media import
-
-The media files are imported during the simple product import process.
-They must be in a folder *files* in the same folder of the simple product csv file.
-You can configure the columns to use in the Magento Catalog Pimgento configuration section.
-The value must be exactly the path of the image, relatively to the csv file: files/foo/bar.png
+If you want to know how to install, configure or use PIMGento, please check [how to...](doc/important_stuff/how_to.md) section. We advise you to start here!
 
 ## Roadmap
 
-* Pim code exclusion
+We have updated our roadmap. Just go [here](doc/important_stuff/roadmap.md).
 
 ## About us
 
