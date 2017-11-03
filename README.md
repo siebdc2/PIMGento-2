@@ -23,7 +23,6 @@ With PIMGento, you can import :
 ## Requirements
 
 * Akeneo PIM >= 1.3 (CE & EE)
-* Akeneo Enhanced Connector
 * Magento >= 2.0 CE & EE
 * Set local_infile mysql variable to TRUE
 * Database encoding must be UTF-8
