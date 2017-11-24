@@ -141,12 +141,16 @@ class Import extends Factory
                 foreach ($data as $store) {
                     $options = $connection->select()
                         ->from(
-                            $tmpTable,
+                            array('a' => $tmpTable),
                             array(
                                 'option_id' => '_entity_id',
                                 'store_id'  => new Expr($store['store_id']),
                                 'value'     => 'label-' . $local
                             )
+                        )->joinInner(
+                            array('b' => $resource->getTable('pimgento_entities')),
+                            'a.attribute = b.code AND b.import = "attribute"',
+                            array()
                         );
 
                     $connection->query(
