@@ -3,10 +3,30 @@
 namespace Pimgento\Attribute\Helper;
 
 use \Magento\Framework\App\Helper\AbstractHelper;
+use \Magento\Framework\App\Helper\Context;
 use \Magento\Framework\DataObject;
+use \Magento\Framework\Serialize\Serializer\Json;
 
 class Type extends AbstractHelper
 {
+    /**
+     * @var Json
+     */
+    protected $serializer;
+
+    /**
+     * Type constructor.
+     *
+     * @param Context $context
+     * @param Json    $serializer
+     */
+    public function __construct(
+        Context $context,
+        Json $serializer
+    ) {
+        $this->serializer = $serializer;
+        parent::__construct($context);
+    }
 
     /**
      * Match Pim type with Magento attribute logic
@@ -48,7 +68,7 @@ class Type extends AbstractHelper
         $additional = array();
 
         if ($types) {
-            $types = unserialize($types);
+            $types = $this->serializer->unserialize($types);
             if (is_array($types)) {
                 foreach ($types as $type) {
                     $additional[$type['pim_type']] = $type['magento_type'];

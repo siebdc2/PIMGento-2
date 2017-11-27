@@ -10,6 +10,7 @@ use \Pimgento\Product\Helper\Config as productHelper;
 use \Pimgento\Product\Helper\Media as mediaHelper;
 use \Pimgento\Product\Model\Factory\Import\Related;
 use \Pimgento\Product\Model\Factory\Import\Media;
+use \Magento\Framework\Serialize\Serializer\Json;
 use \Magento\Catalog\Model\Product;
 use \Magento\Catalog\Model\Product\Link as Link;
 use \Magento\Framework\Event\ManagerInterface;
@@ -75,6 +76,11 @@ class Import extends Factory
     protected $_product;
 
     /**
+     * @var Json
+     */
+    protected $serializer;
+
+    /**
      * PHP Constructor
      *
      * @param \Pimgento\Import\Helper\Config                     $helperConfig
@@ -90,6 +96,7 @@ class Import extends Factory
      * @param Related                                            $related
      * @param Media                                              $media
      * @param Product                                            $product
+     * @param Json                                               $serializer
      * @param array                                              $data
      */
     public function __construct(
@@ -106,6 +113,7 @@ class Import extends Factory
         Related $related,
         Media $media,
         Product $product,
+        Json $serializer,
         array $data = []
     ) {
         parent::__construct($helperConfig, $eventManager, $moduleManager, $scopeConfig, $data);
@@ -119,6 +127,7 @@ class Import extends Factory
         $this->_related = $related;
         $this->_media = $media;
         $this->_product = $product;
+        $this->serializer = $serializer;
     }
 
     /**
@@ -190,10 +199,10 @@ class Import extends Factory
             );
         }
 
-        $matches = $this->_scopeConfig->getValue('pimgento/product/attribute_mapping');
+        $matches = $this->_scopeConfig->getValue(productHelper::CONFIG_PIMGENTO_PRODUCT_ATTR_MAPPING);
 
         if ($matches) {
-            $matches = unserialize($matches);
+            $matches = $this->serializer->unserialize($matches);
             if (is_array($matches)) {
                 $stores = array_merge(
                     $this->_helperConfig->getStores(array('lang')), // en_US
@@ -258,10 +267,10 @@ class Import extends Factory
                 $data['categories'] = 'e.categories';
             }
 
-            $additional = $this->_scopeConfig->getValue('pimgento/product/configurable_attributes');
+            $additional = $this->_scopeConfig->getValue(productHelper::CONFIG_PIMGENTO_PRODUCT_CONFIGURABLE_ATTR);
 
             if ($additional) {
-                $additional = unserialize($additional);
+                $additional = $this->serializer->unserialize($additional);
                 if (is_array($additional)) {
 
                     $stores = array_merge(
