@@ -1,6 +1,9 @@
 <?php
+/**
+ * Only enable this module for upgrade from Magento 2.1 to 2.2
+ */
 
-namespace Pimgento\Attribute\Setup;
+namespace Pimgento\Upgrade\Setup;
 
 use Magento\Framework\App\Config\ReinitableConfigInterface;
 use Magento\Framework\Setup\ModuleContextInterface;
@@ -10,7 +13,9 @@ use Magento\Framework\DB\FieldDataConverterFactory;
 use Magento\Framework\DB\FieldDataConverter;
 use Magento\Framework\DB\Select\QueryModifierFactory;
 use Magento\Framework\DB\DataConverter\SerializedToJson;
-use Pimgento\Attribute\Helper\Config;
+use Pimgento\Attribute\Helper\Config as AttributeConfig;
+use Pimgento\Product\Helper\Config as ProductConfig;
+use Pimgento\Import\Helper\Config as ImportConfig;
 
 /**
  * Upgrade Data
@@ -34,6 +39,7 @@ class UpgradeData implements UpgradeDataInterface
      * @var \Magento\Framework\DB\Query\Generator
      */
     protected $queryGenerator;
+
     /**
      * @var ReinitableConfigInterface
      */
@@ -66,7 +72,7 @@ class UpgradeData implements UpgradeDataInterface
         $setup->startSetup();
 
         /** Magento 2.2 Compatibility */
-        if (version_compare($context->getVersion(), '1.1.0', '<')) {
+        if (version_compare($context->getVersion(), '1.0.0', '<=')) {
             $this->convertSerializedDataToJson($setup);
         }
 
@@ -90,7 +96,11 @@ class UpgradeData implements UpgradeDataInterface
             [
                 'values' => [
                     'path' => [
-                        Config::CONFIG_PIMGENTO_ATTR_TYPES
+                        AttributeConfig::CONFIG_PIMGENTO_ATTR_TYPES,
+                        ProductConfig::CONFIG_PIMGENTO_PRODUCT_ATTR_MAPPING,
+                        ProductConfig::CONFIG_PIMGENTO_PRODUCT_CONFIGURABLE_ATTR,
+                        ProductConfig::CONFIG_PIMGENTO_PRODUCT_TAX_CLASS,
+                        ImportConfig::CONFIG_PIMGENTO_GENERAL_WEBSITE_MAPPING
                     ]
                 ]
             ]

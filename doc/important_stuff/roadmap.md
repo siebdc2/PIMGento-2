@@ -4,7 +4,6 @@ Roadmap
 Short-term plans
 ----------------
 * Compatibility with Akeneo 2.0 and the new product model (November 2017)
-* Compatibility with Magento 2.2 (November 2017)
 * Reviewing/merging pending PRs (November 2017-December 2017)
 * Responding/fixing pending issues (November 2017-December 2017)
 
