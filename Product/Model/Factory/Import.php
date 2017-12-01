@@ -10,7 +10,7 @@ use \Pimgento\Product\Helper\Config as productHelper;
 use \Pimgento\Product\Helper\Media as mediaHelper;
 use \Pimgento\Product\Model\Factory\Import\Related;
 use \Pimgento\Product\Model\Factory\Import\Media;
-use \Magento\Framework\Serialize\Serializer\Json;
+use \Pimgento\Import\Helper\Serializer as Json;
 use \Magento\Catalog\Model\Product;
 use \Magento\Catalog\Model\Product\Visibility;
 use \Magento\Catalog\Model\Product\Link as Link;
@@ -1008,7 +1008,7 @@ class Import extends Factory
                 $this->getCode(),
                 $store,
                 $column,
-                $this->_scopeConfig->getValue('catalog/seo/product_url_suffix')
+                $this->_scopeConfig->getValue(productHelper::CONFIG_CATALOG_SEO_PRODUCT_URL_SUFFIX)
             );
 
         }
@@ -1128,7 +1128,7 @@ class Import extends Factory
      */
     public function importMedia()
     {
-        $enabled = $this->_scopeConfig->getValue('pimgento/image/enabled');
+        $enabled = $this->_scopeConfig->getValue(productHelper::CONFIG_PIMGENTO_PRODUCT_IMAGE_ENABLED);
 
         if (!$enabled) {
             $this->setMessage(

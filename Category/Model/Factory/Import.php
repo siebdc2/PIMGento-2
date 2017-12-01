@@ -6,6 +6,7 @@ use \Pimgento\Import\Model\Factory;
 use \Pimgento\Entities\Model\Entities;
 use \Pimgento\Import\Helper\Config as helperConfig;
 use \Pimgento\Import\Helper\UrlRewrite as urlRewriteHelper;
+use \Pimgento\Category\Helper\Config;
 use \Magento\Framework\Event\ManagerInterface;
 use \Magento\Catalog\Model\Category;
 use \Magento\Framework\App\Cache\TypeListInterface;
@@ -128,7 +129,7 @@ class Import extends Factory
                 $select = $connection->select()
                     ->from($tmpTable, ['entity_id' => '_entity_id', 'name' => 'label-' . $local]);
 
-                $updateUrlKeyConfig = $this->_scopeConfig->getValue('pimgento/category/update_url_key');
+                $updateUrlKeyConfig = $this->_scopeConfig->getValue(Config::CONFIG_PIMGENTO_CATEGORY_UPDATE_URL_KEY);
 
                 if (!$updateUrlKeyConfig) {
                     $select->where('_is_new = ?', 1);
@@ -393,7 +394,7 @@ class Import extends Factory
                         $this->getCode(),
                         $store['store_id'],
                         $column,
-                        $this->_scopeConfig->getValue('catalog/seo/category_url_suffix')
+                        $this->_scopeConfig->getValue(config::CONFIG_CATALOG_SEO_CATEGORY_URL_SUFFIX)
                     );
                 }
             }

@@ -14,3 +14,5 @@
 "Set values to attributes","Association des valeurs aux attributs"
 "Count of child categories","Comptage des catégories enfants"
 "Set Url Rewrite","Mise à jour des réécritures d'URL"
+"Update URL key","Mise à jour de la clé d'URL"
+"Update URL key with category name for each import","Mettre à jour la clé d'URL en fonction du nom de la catégorie à chaque import"

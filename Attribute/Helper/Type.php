@@ -5,7 +5,7 @@ namespace Pimgento\Attribute\Helper;
 use \Magento\Framework\App\Helper\AbstractHelper;
 use \Magento\Framework\App\Helper\Context;
 use \Magento\Framework\DataObject;
-use \Magento\Framework\Serialize\Serializer\Json;
+use \Pimgento\Import\Helper\Serializer as Json;
 
 class Type extends AbstractHelper
 {

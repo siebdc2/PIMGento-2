@@ -2,10 +2,6 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
     <default>
         <pimgento>
-            <product>
-                <attribute_mapping>[{"pim_attribute":"description","magento_attribute":"short_description"}]</attribute_mapping>
-                <configurable_attributes>[{"attribute":"description","value":""},{"attribute":"name","value":""}]</configurable_attributes>
-            </product>
             <image>
                 <enabled>0</enabled>
                 <path></path>
