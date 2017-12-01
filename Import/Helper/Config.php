@@ -6,6 +6,7 @@ use \Magento\Directory\Helper\Data;
 use \Magento\Framework\App\Filesystem\DirectoryList;
 use \Magento\Framework\App\Helper\AbstractHelper;
 use \Magento\Framework\App\Helper\Context;
+use \Magento\Framework\Serialize\Serializer\Json;
 use \Magento\Store\Model\StoreManagerInterface;
 use \Magento\Framework\Filesystem;
 use \Magento\Store\Model\ScopeInterface;
@@ -30,6 +31,11 @@ class Config extends AbstractHelper
     protected $catalogInventoryConfiguration;
 
     /**
+     * @var Json
+     */
+    protected $serializer;
+
+    /**
      * Constructor
      *
      * 0
@@ -37,16 +43,19 @@ class Config extends AbstractHelper
      * @param Filesystem $fileSystem
      * @param StoreManagerInterface $storeManager
      * @param CatalogInventoryConfiguration $catalogInventoryConfiguration
+     * @param Json                          $serializer
      */
     public function __construct(
         Context $context,
         Filesystem $fileSystem,
         StoreManagerInterface $storeManager,
-        CatalogInventoryConfiguration $catalogInventoryConfiguration
+        CatalogInventoryConfiguration $catalogInventoryConfiguration,
+        Json $serializer
     ) {
         $this->fileSystem = $fileSystem;
         $this->storeManager = $storeManager;
         $this->catalogInventoryConfiguration = $catalogInventoryConfiguration;
+        $this->serializer = $serializer;
 
         parent::__construct($context);
     }
@@ -85,7 +94,7 @@ class Config extends AbstractHelper
         $channels = $this->scopeConfig->getValue('pimgento/general/website_mapping');
 
         if ($channels) {
-            $channels = unserialize($channels);
+            $channels = $this->serializer->unserialize($channels);
             if (!is_array($channels)) {
                 $channels = array();
             }

@@ -4,11 +4,14 @@ namespace Pimgento\Product\Helper;
 
 use \Magento\Framework\App\Helper\AbstractHelper;
 use \Magento\Framework\App\Helper\Context;
+use \Magento\Framework\Serialize\Serializer\Json;
 use \Magento\Store\Model\StoreManagerInterface;
-use \Magento\Framework\Filesystem;
 
 class Config extends AbstractHelper
 {
+    /** Config keys */
+    const CONFIG_PIMGENTO_PRODUCT_ATTR_MAPPING      = 'pimgento/product/attribute_mapping';
+    const CONFIG_PIMGENTO_PRODUCT_CONFIGURABLE_ATTR = 'pimgento/product/configurable_attributes';
 
     /**
      * @var \Magento\Store\Model\StoreManagerInterface
@@ -16,15 +19,23 @@ class Config extends AbstractHelper
     protected $_storeManager;
 
     /**
+     * @var Json
+     */
+    protected $serializer;
+
+    /**
      * @param \Magento\Framework\App\Helper\Context $context
      * @param StoreManagerInterface $storeManager
+     * @param Json                  $serializer
      */
     public function __construct(
         Context $context,
-        StoreManagerInterface $storeManager
+        StoreManagerInterface $storeManager,
+        Json $serializer
     )
     {
         $this->_storeManager = $storeManager;
+        $this->serializer = $serializer;
         parent::__construct($context);
     }
 
@@ -42,7 +53,7 @@ class Config extends AbstractHelper
         $stores = $this->_storeManager->getStores(true);
 
         if ($classes) {
-            $classes = unserialize($classes);
+            $classes = $this->serializer->unserialize($classes);
             if (is_array($classes)) {
                 foreach ($classes as $class) {
 
