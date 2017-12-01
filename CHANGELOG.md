@@ -4,6 +4,7 @@ All notable changes to this project will be documented in this file.
 
 ## Not yet released
 
+  * update: Family demo file updated
   * update: fix magic number
   * update: fix SQL error in option import for non existing attribute
 
