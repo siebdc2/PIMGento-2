@@ -11,6 +11,7 @@ use \Pimgento\Product\Helper\Media as mediaHelper;
 use \Pimgento\Product\Model\Factory\Import\Related;
 use \Pimgento\Product\Model\Factory\Import\Media;
 use \Magento\Catalog\Model\Product;
+use \Magento\Catalog\Model\Product\Visibility;
 use \Magento\Catalog\Model\Product\Link as Link;
 use \Magento\Framework\Event\ManagerInterface;
 use \Magento\Framework\App\Cache\TypeListInterface;
@@ -164,7 +165,7 @@ class Import extends Factory
         $connection->addColumn($tmpTable, '_options_container', 'VARCHAR(255) NOT NULL DEFAULT "container2"');
         $connection->addColumn($tmpTable, '_tax_class_id', 'INT(11) NOT NULL DEFAULT 0'); // None
         $connection->addColumn($tmpTable, '_attribute_set_id', 'INT(11) NOT NULL DEFAULT "4"'); // Default
-        $connection->addColumn($tmpTable, '_visibility', 'INT(11) NOT NULL DEFAULT "4"'); // catalog, search
+        $connection->addColumn($tmpTable, '_visibility', 'INT(11) NOT NULL DEFAULT "' . Visibility::VISIBILITY_BOTH . '"'); // catalog, search
         $connection->addColumn($tmpTable, '_status', 'INT(11) NOT NULL DEFAULT "2"'); // Disabled
 
         if (!$connection->tableColumnExists($tmpTable, 'url_key')) {
@@ -177,7 +178,7 @@ class Import extends Factory
         }
 
         if ($connection->tableColumnExists($tmpTable, 'groups')) {
-            $connection->update($tmpTable, array('_visibility' => new Expr('IF(`groups` <> "", 1, 4)')));
+            $connection->update($tmpTable, array('_visibility' => new Expr('IF(`groups` <> "", ' . Visibility::VISIBILITY_NOT_VISIBLE  .', ' . Visibility::VISIBILITY_BOTH . ')')));
         }
 
         if ($connection->tableColumnExists($tmpTable, 'type_id')) {
@@ -464,7 +465,7 @@ class Import extends Factory
                     ->group('p.sku');
 
                 $connection->query(
-                    $connection->insertFromSelect($select, $tmpTable, array('sku', '_entity_id', $column), 1)
+                    $connection->insertFromSelect($select, $tmpTable, array('sku', '_entity_id', $column), AdapterInterface::INSERT_ON_DUPLICATE)
                 );
             }
         }
@@ -486,7 +487,7 @@ class Import extends Factory
             $parents = $connection->select()->from($tmpTable, $values);
             $connection->query(
                 $connection->insertFromSelect(
-                    $parents, $resource->getTable('sequence_product'), array_keys($values), 1
+                    $parents, $resource->getTable('sequence_product'), array_keys($values), AdapterInterface::INSERT_ON_DUPLICATE
                 )
             );
         }
@@ -512,7 +513,7 @@ class Import extends Factory
         $parents = $connection->select()->from($tmpTable, $values);
         $connection->query(
             $connection->insertFromSelect(
-                $parents, $table, array_keys($values), 1
+                $parents, $table, array_keys($values), AdapterInterface::INSERT_ON_DUPLICATE
             )
         );
 
@@ -617,7 +618,7 @@ class Import extends Factory
 
         foreach($values as $storeId => $data) {
             $this->_entities->setValues(
-                $this->getCode(), $resource->getTable('catalog_product_entity'), $data, 4, $storeId, 1
+                $this->getCode(), $resource->getTable('catalog_product_entity'), $data, 4, $storeId, AdapterInterface::INSERT_ON_DUPLICATE
             );
         }
     }
@@ -817,7 +818,7 @@ class Import extends Factory
                 );
             $connection->query(
                 $connection->insertFromSelect(
-                    $select, $resource->getTable('catalog_product_website'), array('product_id', 'website_id'), 1
+                    $select, $resource->getTable('catalog_product_website'), array('product_id', 'website_id'),AdapterInterface::INSERT_ON_DUPLICATE
                 )
             );
         }
@@ -991,7 +992,7 @@ class Import extends Factory
                 ['url_key' => $column],
                 4,
                 $store,
-                1
+                AdapterInterface::INSERT_ON_DUPLICATE
             );
 
             $this->_urlRewriteHelper->rewriteUrls(

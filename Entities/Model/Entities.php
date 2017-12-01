@@ -4,6 +4,7 @@ namespace Pimgento\Entities\Model;
 
 use \Pimgento\Entities\Api\Data\EntitiesInterface;
 use \Magento\Framework\DataObject\IdentityInterface;
+use \Magento\Framework\DB\Adapter\AdapterInterface;
 use \Magento\Framework\Model\AbstractModel;
 use \Exception;
 
@@ -180,7 +181,7 @@ class Entities extends AbstractModel implements EntitiesInterface, IdentityInter
      * @param int    $mode
      * @return $this
      */
-    public function setValues($tableSuffix, $entityTable, $values, $entityTypeId, $storeId, $mode = 1)
+    public function setValues($tableSuffix, $entityTable, $values, $entityTypeId, $storeId, $mode = AdapterInterface::INSERT_ON_DUPLICATE)
     {
         $this->_getResource()
             ->setValues($this->getTableName($tableSuffix), $entityTable, $values, $entityTypeId, $storeId, $mode);
