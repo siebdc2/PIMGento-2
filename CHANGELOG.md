@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## Not yet released
+
+  * update: fix magic number
+  * update: fix SQL error in option import for non existing attribute
+
 ## [100.2.23] - 2017-10-25
 
   * update: set query number for rows insertion in configuration
