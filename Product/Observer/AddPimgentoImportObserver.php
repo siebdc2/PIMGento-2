@@ -44,7 +44,7 @@ class AddPimgentoImportObserver extends AbstractAddImportObserver implements Obs
      */
     protected function getImportSortOrder()
     {
-        return 60;
+        return 70;
     }
 
     /**

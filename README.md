@@ -21,15 +21,20 @@ With PIMGento, you can import :
 * Families
 * Attributes
 * Options
-* Variants (configurable products)
+* Variants (Akeneo < 2.0)
+* Product Model (Akeneo >= 2.0)
+* Family Variant (Akeneo >= 2.0)
 * Products
 
 ## Requirements
 
 * Akeneo PIM >= 1.3 (CE & EE)
 * Magento >= 2.0 CE & EE
-* Set local_infile mysql variable to TRUE
 * Database encoding must be UTF-8
+
+Only for MySQL LOAD DATA INFILE statement:
+
+* Set local_infile mysql variable to TRUE
 * Add "driver_options" key to Magento2 default connection configuration (app/etc/env.php)
 
 ```php
@@ -50,6 +55,8 @@ With PIMGento, you can import :
     ),
   ),
 ```
+
+If LOAD DATA INFILE statement is not authorized for security reasons, insertion row by row is possible.
 
 ## Installation, Configuration and Usage
 

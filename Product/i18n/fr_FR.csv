@@ -15,7 +15,7 @@
 "Magento","Magento"
 "Add","Ajouter"
 "Module Pimgento_Variant is not enabled","Le module Pimgento_Variant n'est pas activé"
-"Column groups not found","Colonne groups introuvable"
+"Columns groups or parent not found","Colonnes groups ou parent introuvables"
 "Column family is missing","La colonne family est introuvable"
 "Column categories not found","La colonne categories est introuvable"
 "Add product required data","Ajout des données requises"

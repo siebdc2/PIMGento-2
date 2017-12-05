@@ -5,25 +5,32 @@ namespace Pimgento\Import\Observer;
 use Magento\Framework\Event\Observer;
 use Magento\Framework\Event\ManagerInterface as EventManager;
 use Magento\Framework\DataObject;
+use Magento\Framework\Module\Manager;
 
 abstract class AbstractAddImportObserver
 {
     /**
-     * @var EventManager
+     * @var EventManager $eventManager
      */
     protected $eventManager;
+
+    /**
+     * @var Manager $moduleManager
+     */
+    protected $moduleManager;
 
     /**
      * PHP Constructor
      *
      * @param EventManager $eventManager
-     *
-     * @throws \Exception
+     * @param Manager $moduleManager
      */
     public function __construct(
-        EventManager $eventManager
+        EventManager $eventManager,
+        Manager $moduleManager
     ) {
-        $this->eventManager = $eventManager;
+        $this->eventManager  = $eventManager;
+        $this->moduleManager = $moduleManager;
     }
 
     /**

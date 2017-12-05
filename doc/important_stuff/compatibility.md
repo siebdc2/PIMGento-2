@@ -5,12 +5,12 @@ Akeneo
 ------
 
 * PIMGento2 is compatible with the [Enhanced Connector Bundle](https://github.com/akeneo-labs/EnhancedConnectorBundle) for the following versions of Akeneo:
+    + v2.0.*
     + v1.7.*
     + v1.6.*
     + v1.5.*
     + v1.4.*
     + v1.3.*
-
 
 * Among Akeneo versions, Enhanced Connector Bundle files can be integrated natively. For example, if your PIM is in 1.7, the Enhanced Connector Bundle only export family and attribute, but don't worry it's because others files are now natively compatible with PIMGento2, so you can just use natives exports!
 

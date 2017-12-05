@@ -186,8 +186,18 @@ class Import extends Factory
             $connection->update($tmpTable, array('_status' => new Expr('IF(`enabled` <> 1, 2, 1)')));
         }
 
-        if ($connection->tableColumnExists($tmpTable, 'groups')) {
-            $connection->update($tmpTable, array('_visibility' => new Expr('IF(`groups` <> "", ' . Visibility::VISIBILITY_NOT_VISIBLE  .', ' . Visibility::VISIBILITY_BOTH . ')')));
+        if ($connection->tableColumnExists($tmpTable, 'parent')) {
+            $groupColumn = 'parent';
+        } else if ($connection->tableColumnExists($tmpTable, 'groups')) {
+            $groupColumn = 'groups';
+        } else {
+            $groupColumn = null;
+        }
+
+        if ($groupColumn) {
+            $connection->update($tmpTable, array(
+                '_visibility' => new Expr('IF(`' . $groupColumn . '` <> "", ' . Visibility::VISIBILITY_NOT_VISIBLE  .', ' . Visibility::VISIBILITY_BOTH . ')'))
+            );
         }
 
         if ($connection->tableColumnExists($tmpTable, 'type_id')) {
@@ -236,23 +246,31 @@ class Import extends Factory
         $connection = $resource->getConnection();
         $tmpTable = $this->_entities->getTableName($this->getCode());
 
+        if ($connection->tableColumnExists($tmpTable, 'parent')) {
+            $groupColumn = 'parent';
+        } else if ($connection->tableColumnExists($tmpTable, 'groups')) {
+            $groupColumn = 'groups';
+        } else {
+            $groupColumn = null;
+        }
+
         if (!$this->moduleIsEnabled('Pimgento_Variant')) {
             $this->setStatus(false);
             $this->setMessage(
                 __('Module Pimgento_Variant is not enabled')
             );
-        } else if (!$connection->tableColumnExists($tmpTable, 'groups')) {
+        } else if (!$groupColumn) {
             $this->setStatus(false);
             $this->setMessage(
-                __('Column groups not found')
+                __('Columns groups or parent not found')
             );
         } else {
             $connection->addColumn($tmpTable, '_children', 'TEXT NULL');
             $connection->addColumn($tmpTable, '_axis', 'VARCHAR(255) NULL');
 
             $data = array(
-                'sku' => 'e.groups',
-                'url_key' => 'e.groups',
+                'sku' => 'e.' . $groupColumn,
+                'url_key' => 'e.' . $groupColumn,
                 '_children' => new Expr('GROUP_CONCAT(e.sku SEPARATOR ",")'),
                 '_type_id' => new Expr('"configurable"'),
                 '_options_container' => new Expr('"container1"'),
@@ -324,11 +342,11 @@ class Import extends Factory
                 ->from(array('e' => $tmpTable), $data)
                 ->joinInner(
                     array('v' => $resource->getTable('pimgento_variant')),
-                    'e.groups = v.code',
+                    'e.' . $groupColumn . ' = v.code',
                     array()
                 )
-                ->where('groups <> ""')
-                ->group('e.groups');
+                ->where('e.' . $groupColumn . ' <> ""')
+                ->group('e.' . $groupColumn);
 
             $connection->query(
                 $connection->insertFromSelect($configurable, $tmpTable, array_keys($data))
@@ -418,6 +436,7 @@ class Import extends Factory
             'categories',
             'family',
             'groups',
+            'parent',
             'url_key',
             'enabled',
         );
@@ -575,6 +594,7 @@ class Import extends Factory
             'categories',
             'family',
             'groups',
+            'parent',
             'enabled',
         );
 
@@ -641,15 +661,23 @@ class Import extends Factory
         $connection = $resource->getConnection();
         $tmpTable = $this->_entities->getTableName($this->getCode());
 
+        if ($connection->tableColumnExists($tmpTable, 'parent')) {
+            $groupColumn = 'parent';
+        } else if ($connection->tableColumnExists($tmpTable, 'groups')) {
+            $groupColumn = 'groups';
+        } else {
+            $groupColumn = null;
+        }
+
         if (!$this->moduleIsEnabled('Pimgento_Variant')) {
             $this->setStatus(false);
             $this->setMessage(
                 __('Module Pimgento_Variant is not enabled')
             );
-        } else if (!$connection->tableColumnExists($tmpTable, 'groups')) {
+        } else if (!$groupColumn) {
             $this->setStatus(false);
             $this->setMessage(
-                __('Column groups not found')
+                __('Columns groups or parent not found')
             );
         } else {
             $stores = $this->_helperConfig->getStores('store_id');

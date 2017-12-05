@@ -1,141 +1,169 @@
-code;parent;label-de_DE;label-en_US;label-fr_FR
-master;;Hauptkatalog;"Master catalog";"Catalogue principal"
-tvs_projectors;master;"TVs und projectoren";"TVs and projectors";"Téléviseurs et projecteurs"
-pc_monitors;tvs_projectors;"PC Monitoren";"PC Monitors";"Moniteurs PC"
-led_tvs;tvs_projectors;"TVs LED";"LED TVs";"Télévisions LED"
-cameras;master;Cameras;Cameras;Caméras
-digital_cameras;cameras;"Digitale Kameras";"Digital cameras";"Caméras digitales"
-camcorders;cameras;"Digitale Videokameras";Camcorders;"Caméscopes numériques"
-webcams;cameras;Webcams;Webcams;Webcams
-audio_video;master;"Audio und Video";"Audio and Video";"Audio et Video"
-headphones;audio_video;Kopfhörer;Headphones;"Casques audio"
-mp3_players;audio_video;"MP3/MP4 Player";"MP3 players";"Lecteurs et enregistreurs MP3"
-loudspeakers;audio_video;Lautsprecher;Loudspeakers;Hauts-parleurs
-print_scan;master;"Drucken und Scannen";"Print and scan";"Imprimantes et scanners"
-multifunctionals;print_scan;Multifunktionsgeräte;Multifunctionals;Multifonctions
-laser_led_printers;print_scan;Laserdrucker;"Laser and LED printers";"Imprimantes laser et LED"
-scanners;print_scan;Scanners;Scanners;Scanners
-clothes;master;Kleidung;Clothes;Vêtements
-pants;clothes;Hose;Pants;Pantalons
-jeans;pants;Jeans;Jeans;Jeans
-shoes;clothes;Schuhe;Shoes;Chaussures
-clothes_accessories;clothes;Zubehör;Accessories;Accessoires
-caps;clothes_accessories;Kappe;Caps;Bonnets
-ties;clothes_accessories;Binden;Ties;Cravates
-gloves;clothes_accessories;Handschuhe;Gloves;Gants
-belts;clothes_accessories;Gürtel;Belts;Ceintures
-sweat;clothes;Pull;Sweat;Pullover
-coats;clothes;Mäntel;Coats;Manteaux
-underwear;clothes;Unterwäsche;Underwear;Sous-vêtements
-tshirts;clothes;T-Shirts;T-Shirts;T-Shirts
-office;master;Büro;Office;Bureau
-office_furnitures;office;Büromöbel;"Office furnitures";"Mobilier de bureau"
-desk_chairs;office_furnitures;Schreibtisch-Stühle;"Desk chairs";"Chaises de bureau"
-office_tables;office_furnitures;Bürotische;"Office tables";"Tables de bureau"
-paper;office;Briefpapier;Stationery;Papeterie
-notebooks;paper;Heft;Notebooks;Cahiers
-cards;paper;Karten;Cards;Cartes
-envelopes;paper;Umschläge;Envelopes;Enveloppes
-desk_supplies;office;"Schreibtisch Versorgung";"Desk supplies";"Fournitures de bureau"
-markers;desk_supplies;Marker;Markers;Marqueurs
-erasers;desk_supplies;Radiergummi;Erasers;Effaceurs
-pens;desk_supplies;Stifte;Pens;Stylos
-postit_notes;desk_supplies;;;
-stamps;desk_supplies;Briefmarken;Stamps;Timbres
-adhesives;desk_supplies;Klebstoffe;Adhesives;Adhésifs
-goodies;office;Leckereien;Goodies;Goodies
-stickers;goodies;Aufkleber;Stickers;Autocollants
-casino_chips;goodies;Casino-Chips;"Casino chips";"Jetons de casino"
-mugs;goodies;Tassen;Mugs;Chopes
-sales;;"Katalog Umsatz";"Sales catalog";"Catalogue des ventes"
-brands;sales;Marken;Brands;Marques
-3go;brands;3GO;3GO;3GO
-3m;brands;3M;3M;3M
-a4tech;brands;A4Tech;A4Tech;A4Tech
-aoc;brands;AOC;AOC;AOC
-asus;brands;ASUS;ASUS;ASUS
-acer;brands;Acer;Acer;Acer
-adapt;brands;Adapt;Adapt;Adapt
-approx;brands;Approx;Approx;Approx
-avision;brands;Avision;Avision;Avision
-belkin;brands;Belkin;Belkin;Belkin
-brother;brands;Brother;Brother;Brother
-canon;brands;Canon;Canon;Canon
-cisco;brands;Cisco;Cisco;Cisco
-conceptronic;brands;Conceptronic;Conceptronic;Conceptronic
-d_link;brands;D-Link;D-Link;D-Link
-dell;brands;DELL;DELL;DELL
-dymo;brands;DYMO;DYMO;DYMO
-devolo;brands;Devolo;Devolo;Devolo
-dicota;brands;Dicota;Dicota;Dicota
-eminent;brands;Eminent;Eminent;Eminent
-emtec;brands;Emtec;Emtec;Emtec
-ewent;brands;Ewent;Ewent;Ewent
-fujifilm;brands;Fujifilm;Fujifilm;Fujifilm
-fujitsu;brands;Fujitsu;Fujitsu;Fujitsu
-g_cube;brands;G-Cube;G-Cube;G-Cube
-gear4;brands;GEAR4;GEAR4;GEAR4
-gigabyte;brands;Gigabyte;Gigabyte;Gigabyte
-hp;brands;HP;HP;HP
-hamlet;brands;Hamlet;Hamlet;Hamlet
-hiper;brands;Hiper;Hiper;Hiper
-ibm;brands;IBM;IBM;IBM
-icidu;brands;ICIDU;ICIDU;ICIDU
-ion;brands;ION;ION;ION
-ion_audio;brands;"ION Audio";"ION Audio";"ION Audio"
-kensington;brands;Kensington;Kensington;Kensington
-kodak;brands;Kodak;Kodak;Kodak
-kyocera;brands;Kyocera;Kyocera;Kyocera
-lg;brands;LG;LG;LG
-lacie;brands;LaCie;LaCie;LaCie
-lenco;brands;Lenco;Lenco;Lenco
-lenovo;brands;Lenovo;Lenovo;Lenovo
-levelone;brands;LevelOne;LevelOne;LevelOne
-lexmark;brands;Lexmark;Lexmark;Lexmark
-logitech;brands;Logitech;Logitech;Logitech
-macally;brands;Macally;Macally;Macally
-magnavox;brands;Magnavox;Magnavox;Magnavox
-medion;brands;Medion;Medion;Medion
-microsoft;brands;Microsoft;Microsoft;Microsoft
-nec;brands;NEC;NEC;NEC
-ngs;brands;NGS;NGS;NGS
-noxon;brands;NOXON;NOXON;NOXON
-oki;brands;OKI;OKI;OKI
-ovislink;brands;OvisLink;OvisLink;OvisLink
-philips;brands;Philips;Philips;Philips
-razer;brands;Razer;Razer;Razer
-ricatech;brands;Ricatech;Ricatech;Ricatech
-ricoh;brands;Ricoh;Ricoh;Ricoh
-spcinternet;brands;SPCinternet;SPCinternet;SPCinternet
-salora;brands;Salora;Salora;Salora
-samsung;brands;Samsung;Samsung;Samsung
-sandberg;brands;Sandberg;Sandberg;Sandberg
-sitecom;brands;Sitecom;Sitecom;Sitecom
-sony;brands;Sony;Sony;Sony
-speed_link;brands;Speed-Link;Speed-Link;Speed-Link
-spire;brands;Spire;Spire;Spire
-sweex;brands;Sweex;Sweex;Sweex
-tdk;brands;TDK;TDK;TDK
-tacens;brands;Tacens;Tacens;Tacens
-targus;brands;Targus;Targus;Targus
-techly;brands;Techly;Techly;Techly
-teufel;brands;Teufel;Teufel;Teufel
-thrustmaster;brands;Thrustmaster;Thrustmaster;Thrustmaster
-toshiba;brands;Toshiba;Toshiba;Toshiba
-trust;brands;Trust;Trust;Trust
-v7;brands;V7;V7;V7
-value;brands;Value;Value;Value
-verbatim;brands;Verbatim;Verbatim;Verbatim
-viewsonic;brands;Viewsonic;Viewsonic;Viewsonic
-vogel_s;brands;Vogel's;Vogel's;Vogel's
-woxter;brands;Woxter;Woxter;Woxter
-xerox;brands;Xerox;Xerox;Xerox
-xtrememac;brands;XtremeMac;XtremeMac;XtremeMac
-yarvik;brands;Yarvik;Yarvik;Yarvik
-iiyama;brands;iiyama;iiyama;iiyama
-takems;brands;takeMS;takeMS;takeMS
-home_appliances;sales;Haushaltsgeräte;"Home appliances";"Appareils ménagers"
-tvs_projectors_sales;home_appliances;"TVs und projectoren";"TVs and projectors";"Téléviseurs et projecteurs"
-cameras_sales;home_appliances;Cameras;Cameras;Caméras
-audio_video_sales;home_appliances;"Audio und Video";"Audio and Video";"Audio et Video"
-print_scan_sales;home_appliances;"Drucken und Scannen";"Print and scan";"Imprimantes et scanners"
+code;label-en_US;label-de_DE;label-fr_FR;parent
+master;"Master catalog";Hauptkatalog;"Catalogue principal";
+tvs_projectors;"TVs and projectors";"TVs und projectoren";"Téléviseurs et projecteurs";master
+pc_monitors;"PC Monitors";"PC Monitoren";"Moniteurs PC";tvs_projectors
+led_tvs;"LED TVs";"TVs LED";"Télévisions LED";tvs_projectors
+cameras;Cameras;Cameras;Caméras;master
+digital_cameras;"Digital cameras";"Digitale Kameras";"Caméras digitales";cameras
+camcorders;Camcorders;"Digitale Videokameras";"Caméscopes numériques";cameras
+webcams;Webcams;Webcams;Webcams;cameras
+audio_video;"Audio and Video";"Audio und Video";"Audio et Video";master
+headphones;Headphones;Kopfhörer;"Casques audio";audio_video
+mp3_players;"MP3 players";"MP3/MP4 Player";"Lecteurs et enregistreurs MP3";audio_video
+loudspeakers;Loudspeakers;Lautsprecher;Hauts-parleurs;audio_video
+print_scan;"Print and scan";"Drucken und Scannen";"Imprimantes et scanners";master
+multifunctionals;Multifunctionals;Multifunktionsgeräte;Multifonctions;print_scan
+laser_led_printers;"Laser and LED printers";Laserdrucker;"Imprimantes laser et LED";print_scan
+scanners;Scanners;Scanners;Scanners;print_scan
+clothes;Clothes;Kleidung;Vêtements;master
+pants;Pants;Hose;Pantalons;clothes
+jeans;Jeans;Jeans;Jeans;pants
+shoes;Shoes;Schuhe;Chaussures;clothes
+clothes_accessories;Accessories;Zubehör;Accessoires;clothes
+caps;Caps;Kappe;Bonnets;clothes_accessories
+ties;Ties;Binden;Cravates;clothes_accessories
+gloves;Gloves;Handschuhe;Gants;clothes_accessories
+belts;Belts;Gürtel;Ceintures;clothes_accessories
+sweat;Sweat;Pull;Pullover;clothes
+coats;Coats;Mäntel;Manteaux;clothes
+underwear;Underwear;Unterwäsche;Sous-vêtements;clothes
+office;Office;Büro;Bureau;master
+office_furnitures;"Office furnitures";Büromöbel;"Mobilier de bureau";office
+desk_chairs;"Desk chairs";Schreibtisch-Stühle;"Chaises de bureau";office_furnitures
+office_tables;"Office tables";Bürotische;"Tables de bureau";office_furnitures
+paper;Stationery;Briefpapier;Papeterie;office
+notebooks;Notebooks;Heft;Cahiers;paper
+cards;Cards;Karten;Cartes;paper
+envelopes;Envelopes;Umschläge;Enveloppes;paper
+desk_supplies;"Desk supplies";"Schreibtisch Versorgung";"Fournitures de bureau";office
+markers;Markers;Marker;Marqueurs;desk_supplies
+erasers;Erasers;Radiergummi;Effaceurs;desk_supplies
+pens;Pens;Stifte;Stylos;desk_supplies
+postit_notes;;;;desk_supplies
+stamps;Stamps;Briefmarken;Timbres;desk_supplies
+adhesives;Adhesives;Klebstoffe;Adhésifs;desk_supplies
+goodies;Goodies;Leckereien;Goodies;office
+stickers;Stickers;Aufkleber;Autocollants;goodies
+casino_chips;"Casino chips";Casino-Chips;"Jetons de casino";goodies
+mugs;Mugs;Tassen;Chopes;goodies
+master_accessories;Accessories;Accessories;Accessories;master
+master_accessories_belts;Belts;Belts;Belts;master_accessories
+master_accessories_bags;Bags;Bags;Bags;master_accessories
+master_accessories_sunglasses;Sunglasses;Sunglasses;Sunglasses;master_accessories
+master_accessories_hats;Hats;Hats;Hats;master_accessories
+master_accessories_scarves;Scarves;Scarves;Scarves;master_accessories
+master_men;Men;Men;Men;master
+master_men_blazers;Blazers;Blazers;Blazers;master_men
+master_men_blazers_deals;Deals;Deals;Deals;master_men_blazers
+master_men_pants;Pants;Pants;Pants;master_men
+master_men_pants_shorts;Shorts;Shorts;Shorts;master_men_pants
+master_men_pants_jeans;Jeans;Jeans;Jeans;master_men_pants
+master_men_shoes;Shoes;Shoes;Shoes;master_men
+tshirts;T-shirts;T-shirts;T-shirts;master_men
+master_women;Women;Women;Women;master
+master_women_blouses;Blouses;Blouses;Blouses;master_women
+master_women_blouses_deals;Deals;Deals;Deals;master_women_blouses
+master_women_dresses;Dresses;Dresses;Dresses;master_women
+master_women_shirts;Shirts;Shirts;Shirts;master_women
+master_women_shoes;Shoes;Shoes;Shoes;master_women
+sales;"Sales catalog";"Katalog Umsatz";"Catalogue des ventes";
+brands;Brands;Marken;Marques;sales
+3go;3GO;3GO;3GO;brands
+3m;3M;3M;3M;brands
+a4tech;A4Tech;A4Tech;A4Tech;brands
+aoc;AOC;AOC;AOC;brands
+asus;ASUS;ASUS;ASUS;brands
+acer;Acer;Acer;Acer;brands
+adapt;Adapt;Adapt;Adapt;brands
+approx;Approx;Approx;Approx;brands
+avision;Avision;Avision;Avision;brands
+belkin;Belkin;Belkin;Belkin;brands
+brother;Brother;Brother;Brother;brands
+canon;Canon;Canon;Canon;brands
+cisco;Cisco;Cisco;Cisco;brands
+conceptronic;Conceptronic;Conceptronic;Conceptronic;brands
+d_link;D-Link;D-Link;D-Link;brands
+dell;DELL;DELL;DELL;brands
+dymo;DYMO;DYMO;DYMO;brands
+devolo;Devolo;Devolo;Devolo;brands
+dicota;Dicota;Dicota;Dicota;brands
+eminent;Eminent;Eminent;Eminent;brands
+emtec;Emtec;Emtec;Emtec;brands
+ewent;Ewent;Ewent;Ewent;brands
+fujifilm;Fujifilm;Fujifilm;Fujifilm;brands
+fujitsu;Fujitsu;Fujitsu;Fujitsu;brands
+g_cube;G-Cube;G-Cube;G-Cube;brands
+gear4;GEAR4;GEAR4;GEAR4;brands
+gigabyte;Gigabyte;Gigabyte;Gigabyte;brands
+hp;HP;HP;HP;brands
+hamlet;Hamlet;Hamlet;Hamlet;brands
+hiper;Hiper;Hiper;Hiper;brands
+ibm;IBM;IBM;IBM;brands
+icidu;ICIDU;ICIDU;ICIDU;brands
+ion;ION;ION;ION;brands
+ion_audio;"ION Audio";"ION Audio";"ION Audio";brands
+kensington;Kensington;Kensington;Kensington;brands
+kodak;Kodak;Kodak;Kodak;brands
+kyocera;Kyocera;Kyocera;Kyocera;brands
+lg;LG;LG;LG;brands
+lacie;LaCie;LaCie;LaCie;brands
+lenco;Lenco;Lenco;Lenco;brands
+lenovo;Lenovo;Lenovo;Lenovo;brands
+levelone;LevelOne;LevelOne;LevelOne;brands
+lexmark;Lexmark;Lexmark;Lexmark;brands
+logitech;Logitech;Logitech;Logitech;brands
+macally;Macally;Macally;Macally;brands
+magnavox;Magnavox;Magnavox;Magnavox;brands
+medion;Medion;Medion;Medion;brands
+microsoft;Microsoft;Microsoft;Microsoft;brands
+nec;NEC;NEC;NEC;brands
+ngs;NGS;NGS;NGS;brands
+noxon;NOXON;NOXON;NOXON;brands
+oki;OKI;OKI;OKI;brands
+ovislink;OvisLink;OvisLink;OvisLink;brands
+philips;Philips;Philips;Philips;brands
+razer;Razer;Razer;Razer;brands
+ricatech;Ricatech;Ricatech;Ricatech;brands
+ricoh;Ricoh;Ricoh;Ricoh;brands
+spcinternet;SPCinternet;SPCinternet;SPCinternet;brands
+salora;Salora;Salora;Salora;brands
+samsung;Samsung;Samsung;Samsung;brands
+sandberg;Sandberg;Sandberg;Sandberg;brands
+sitecom;Sitecom;Sitecom;Sitecom;brands
+sony;Sony;Sony;Sony;brands
+speed_link;Speed-Link;Speed-Link;Speed-Link;brands
+spire;Spire;Spire;Spire;brands
+sweex;Sweex;Sweex;Sweex;brands
+tdk;TDK;TDK;TDK;brands
+tacens;Tacens;Tacens;Tacens;brands
+targus;Targus;Targus;Targus;brands
+techly;Techly;Techly;Techly;brands
+teufel;Teufel;Teufel;Teufel;brands
+thrustmaster;Thrustmaster;Thrustmaster;Thrustmaster;brands
+toshiba;Toshiba;Toshiba;Toshiba;brands
+trust;Trust;Trust;Trust;brands
+v7;V7;V7;V7;brands
+value;Value;Value;Value;brands
+verbatim;Verbatim;Verbatim;Verbatim;brands
+viewsonic;Viewsonic;Viewsonic;Viewsonic;brands
+vogel_s;Vogel's;Vogel's;Vogel's;brands
+woxter;Woxter;Woxter;Woxter;brands
+xerox;Xerox;Xerox;Xerox;brands
+xtrememac;XtremeMac;XtremeMac;XtremeMac;brands
+yarvik;Yarvik;Yarvik;Yarvik;brands
+iiyama;iiyama;iiyama;iiyama;brands
+takems;takeMS;takeMS;takeMS;brands
+home_appliances;"Home appliances";Haushaltsgeräte;"Appareils ménagers";sales
+tvs_projectors_sales;"TVs and projectors";"TVs und projectoren";"Téléviseurs et projecteurs";home_appliances
+cameras_sales;Cameras;Cameras;Caméras;home_appliances
+audio_video_sales;"Audio and Video";"Audio und Video";"Audio et Video";home_appliances
+print_scan_sales;"Print and scan";"Drucken und Scannen";"Imprimantes et scanners";home_appliances
+print;Print;Print;Print;
+print_accessories;Accessories;Accessories;Accessories;print
+print_clothing;Clothing;Clothing;Clothing;print
+print_shoes;Shoes;Shoes;Shoes;print
+suppliers;Suppliers;Suppliers;Suppliers;
+supplier_mongo;Mongo;Mongo;Mongo;suppliers
+supplier_zaro;Zaro;Zaro;Zaro;suppliers
+supplier_the_tootles;"The Tootles";"The Tootles";"The Tootles";suppliers
+supplier_abibas;Abibas;Abibas;Abibas;suppliers

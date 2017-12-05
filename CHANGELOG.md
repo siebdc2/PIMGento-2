@@ -4,9 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## Not yet released
 
+  * update: Sample files updated with Akeneo 2.0 demo data
+  * update: Akeneo 2.0 compatibility (Product model and Variant Family)
   * update: New module for upgrade from Magento 2.1 to 2.2 added (use only for upgrade)
   * update: Magento 2.2 compatibility (compatibility preserved with previous versions)
-  * update: Family demo file updated
   * update: fix magic number
   * update: fix SQL error in option import for non existing attribute
 

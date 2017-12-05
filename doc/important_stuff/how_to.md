@@ -30,6 +30,12 @@ php bin/magento module:enable Pimgento_Variant
 php bin/magento module:enable Pimgento_Product
 ```
 
+With Akeneo >= 2.0 only:
+
+```shell
+php bin/magento module:enable Pimgento_VariantFamily
+```
+
 Check and update database setup:
 ```shell
 php bin/magento setup:db:status

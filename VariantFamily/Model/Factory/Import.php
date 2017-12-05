@@ -1,10 +1,11 @@
 <?php
 
-namespace Pimgento\Variant\Model\Factory;
+namespace Pimgento\VariantFamily\Model\Factory;
 
 use \Pimgento\Import\Model\Factory;
 use \Pimgento\Entities\Model\Entities;
 use \Pimgento\Import\Helper\Config as helperConfig;
+use \Pimgento\VariantFamily\Helper\Config as helperVariant;
 use \Magento\Framework\Event\ManagerInterface;
 use \Magento\Framework\App\Cache\TypeListInterface;
 use \Magento\Eav\Model\Entity\Attribute\SetFactory;
@@ -27,8 +28,14 @@ class Import extends Factory
     protected $_cacheTypeList;
 
     /**
+     * @var helperVariant
+     */
+    protected $_helperVariant;
+
+    /**
      * @param \Pimgento\Entities\Model\Entities $entities
      * @param \Pimgento\Import\Helper\Config $helperConfig
+     * @param \Pimgento\VariantFamily\Helper\Config $helperVariant
      * @param \Magento\Framework\Module\Manager $moduleManager
      * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
      * @param \Magento\Framework\Event\ManagerInterface $eventManager
@@ -38,6 +45,7 @@ class Import extends Factory
     public function __construct(
         Entities $entities,
         helperConfig $helperConfig,
+        helperVariant $helperVariant,
         moduleManager $moduleManager,
         scopeConfig $scopeConfig,
         ManagerInterface $eventManager,
@@ -48,6 +56,7 @@ class Import extends Factory
         parent::__construct($helperConfig, $eventManager, $moduleManager, $scopeConfig, $data);
         $this->_entities = $entities;
         $this->_cacheTypeList = $cacheTypeList;
+        $this->_helperVariant = $helperVariant;
     }
 
     /**
@@ -81,68 +90,33 @@ class Import extends Factory
     }
 
     /**
-     * Remove columns from variant table
+     * Update Axis column
      */
-    public function removeColumns()
-    {
-        $resource = $this->_entities->getResource();
-        $connection = $resource->getConnection();
-
-        $except = array('code', 'axis');
-
-        $variantTable = $resource->getTable('pimgento_variant');
-
-        $columns = array_keys($connection->describeTable($variantTable));
-
-        foreach ($columns as $column) {
-            if (in_array($column, $except)) {
-                continue;
-            }
-
-            $connection->dropColumn($variantTable, $column);
-        }
-    }
-
-    /**
-     * Add columns to variant table
-     */
-    public function addColumns()
+    public function updateAxis()
     {
         $resource = $this->_entities->getResource();
         $connection = $resource->getConnection();
         $tmpTable = $this->_entities->getTableName($this->getCode());
 
-        $except = array('code', 'axis', 'type', '_entity_id', '_is_new');
+        $connection->addColumn($tmpTable, '_axis', 'VARCHAR(255)');
 
-        $variantTable = $resource->getTable('pimgento_variant');
+        $columns = [];
+        for ($i = 1; $i <= $this->_helperVariant->getMaxAxesNumber(); $i++) {
+            $columns[] = 'variant-axes_' . $i;
+        }
 
-        $columns = array_keys($connection->describeTable($tmpTable));
-
-        foreach ($columns as $column) {
-            if (in_array($column, $except)) {
-                continue;
+        foreach ($columns as $key => $column) {
+            if (!$connection->tableColumnExists($tmpTable, $column)) {
+                unset($columns[$key]);
             }
-
-            $connection->addColumn($variantTable, $this->_columnName($column), 'TEXT');
         }
 
-        if (!$connection->tableColumnExists($tmpTable, 'axis')) {
-            $connection->addColumn($tmpTable, 'axis', 'VARCHAR(255)');
+        if (!empty($columns)) {
+            $update = 'TRIM(BOTH "," FROM CONCAT(`' . join('`, "," ,`', $columns) . '`))';
+            $connection->update($tmpTable, ['_axis' => new Expr($update)]);
         }
-    }
 
-    /**
-     * Add or update data in variant table
-     */
-    public function updateData()
-    {
-        $resource = $this->_entities->getResource();
-        $connection = $resource->getConnection();
-        $tmpTable = $this->_entities->getTableName($this->getCode());
-
-        $variantTable = $resource->getTable('pimgento_variant');
-
-        $variant = $connection->query(
+        $variantFamily = $connection->query(
             $connection->select()->from($tmpTable)
         );
 
@@ -153,56 +127,41 @@ class Import extends Factory
             ->where('entity_type_id = ?', 4)
         );
 
-        $columns = array_keys($connection->describeTable($tmpTable));
+        while (($row = $variantFamily->fetch())) {
+            $axisAttributes = explode(',', $row['_axis']);
 
-        $values = [];
-        $i = 0;
-        $keys = [];
-        while (($row = $variant->fetch())) {
+            $axis = [];
 
-
-            $values[$i] = [];
-
-            foreach ($columns as $column) {
-
-                if ($connection->tableColumnExists($variantTable, $this->_columnName($column))) {
-
-                    if ($column != 'axis') {
-                        $values[$i][$this->_columnName($column)] = $row[$column];
-                    }
-
-                    if ($column == 'axis' && !$connection->tableColumnExists($tmpTable, 'family_variant')) {
-                        $axisAttributes = explode(',', $row['axis']);
-
-                        $axis = array();
-
-                        foreach ($axisAttributes as $code) {
-                            if (isset($attributes[$code])) {
-                                $axis[] = $attributes[$code];
-                            }
-                        }
-
-                        $values[$i][$column] = join(',', $axis);
-                    }
-
-                    $keys = array_keys($values[$i]);
+            foreach ($axisAttributes as $code) {
+                if (isset($attributes[$code])) {
+                    $axis[] = $attributes[$code];
                 }
             }
-            $i++;
 
-            /**
-             * Write 500 values at a time.
-             */
-            if (count($values) > 500) {
-                $connection->insertOnDuplicate($variantTable, $values, $keys);
-                $values = [];
-                $i = 0;
-            }
+            $connection->update($tmpTable, ['_axis' => join(',', $axis)], ['code = ?' => $row['code']]);
         }
+    }
 
-        if (count($values) > 0) {
-            $connection->insertOnDuplicate($variantTable, $values, $keys);
-        }
+    /**
+     * Update Product Model
+     */
+    public function updateProductModel()
+    {
+        $resource = $this->_entities->getResource();
+        $connection = $resource->getConnection();
+        $tmpTable = $this->_entities->getTableName($this->getCode());
+
+        $query = $connection->select()
+            ->from(false, ['axis' => 'f._axis'])
+            ->joinLeft(
+                ['f' => $tmpTable],
+                'p.family_variant = f.code',
+                []
+            );
+
+        $connection->query(
+            $connection->updateFromSelect($query, ['p' => $resource->getTable('pimgento_variant')])
+        );
     }
 
     /**
@@ -211,6 +170,25 @@ class Import extends Factory
     public function dropTable()
     {
         $this->_entities->dropTable($this->getCode());
+    }
+
+    /**
+     * Clean cache
+     */
+    public function cleanCache()
+    {
+        $types = array(
+            \Magento\Framework\App\Cache\Type\Block::TYPE_IDENTIFIER,
+            \Magento\PageCache\Model\Cache\Type::TYPE_IDENTIFIER
+        );
+
+        foreach ($types as $type) {
+            $this->_cacheTypeList->cleanType($type);
+        }
+
+        $this->setMessage(
+            __('Cache cleaned for: %1', join(', ', $types))
+        );
     }
 
     /**

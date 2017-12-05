@@ -1,6 +1,6 @@
 <?php
 
-namespace Pimgento\Variant\Observer;
+namespace Pimgento\VariantFamily\Observer;
 
 use Magento\Framework\Event\ObserverInterface;
 use Pimgento\Import\Observer\AbstractAddImportObserver;
@@ -14,7 +14,7 @@ class AddPimgentoImportObserver extends AbstractAddImportObserver implements Obs
      */
     protected function getImportCode()
     {
-        return 'variant';
+        return 'variant_family';
     }
 
     /**
@@ -24,10 +24,7 @@ class AddPimgentoImportObserver extends AbstractAddImportObserver implements Obs
      */
     protected function getImportName()
     {
-        if ($this->moduleManager->isEnabled('Pimgento_VariantFamily')) {
-            return __('Product Model');
-        }
-        return __('Variant');
+        return __('Family Variant');
     }
 
     /**
@@ -37,7 +34,7 @@ class AddPimgentoImportObserver extends AbstractAddImportObserver implements Obs
      */
     protected function getImportDefaultClassname()
     {
-        return '\Pimgento\Variant\Model\Factory\Import';
+        return '\Pimgento\VariantFamily\Model\Factory\Import';
     }
 
     /**
@@ -47,7 +44,7 @@ class AddPimgentoImportObserver extends AbstractAddImportObserver implements Obs
      */
     protected function getImportSortOrder()
     {
-        return 50;
+        return 60;
     }
 
     /**
@@ -57,12 +54,6 @@ class AddPimgentoImportObserver extends AbstractAddImportObserver implements Obs
      */
     protected function getStepsDefinition()
     {
-        $import = __('Variant');
-
-        if ($this->moduleManager->isEnabled('Pimgento_VariantFamily')) {
-            $import = __('Product Model');
-        }
-
         $stepsBefore = array(
             array(
                 'comment' => __('Create temporary table'),
@@ -73,17 +64,13 @@ class AddPimgentoImportObserver extends AbstractAddImportObserver implements Obs
                 'method'  => 'insertData',
             ),
             array(
-                'comment' => __('Clean up %1', $import),
-                'method'  => 'removeColumns',
+                'comment' => __('Update Axis'),
+                'method'  => 'updateAxis',
             ),
             array(
-                'comment' => __('%1 data enrichment', $import),
-                'method'  => 'addColumns',
+                'comment' => __('Update Product Model'),
+                'method'  => 'updateProductModel',
             ),
-            array(
-                'comment' => __('Fill %1 data', $import),
-                'method'  => 'updateData',
-            )
         );
 
         $stepsAfter = array(
@@ -91,6 +78,10 @@ class AddPimgentoImportObserver extends AbstractAddImportObserver implements Obs
                 'comment' => __('Drop temporary table'),
                 'method'  => 'dropTable',
             ),
+            array(
+                'comment' => __('Clean cache'),
+                'method'  => 'cleanCache',
+            )
         );
 
         return array_merge(

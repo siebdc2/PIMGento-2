@@ -6,7 +6,7 @@
                 <resource id="Magento_Backend::system">
                     <resource id="Pimgento_Import::pimgento">
                         <resource id="Pimgento_Import::pimgento_import">
-                            <resource id="Pimgento_Import::pimgento_import_product" title="Products" sortOrder="70" />
+                            <resource id="Pimgento_Import::pimgento_import_variant_family" title="Family Variant" sortOrder="60" />
                         </resource>
                     </resource>
                 </resource>
