@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## Not yet released
+## [100.3.0] - 2017-12-05
 
   * update: Sample files updated with Akeneo 2.0 demo data
   * update: Akeneo 2.0 compatibility (Product model and Variant Family)
