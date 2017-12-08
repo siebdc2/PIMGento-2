@@ -328,6 +328,7 @@ class Media extends Factory
             foreach ($medias as $media) {
                 $from = $this->_mediaHelper->getImportFolder() . $media['from'];
                 $to = $this->_mediaHelper->getMediaAbsolutePath() . $media['to'];
+                $cleanCache = false;
 
                 // if it does not exist, we pass
                 if (!is_file($from)) {
@@ -341,13 +342,19 @@ class Media extends Factory
 
                 // remove the file if it exist
                 if (is_file($to)) {
+                    if (md5_file($from) !== md5_file($to)) {
+                        $cleanCache = true;
+                    }
                     unlink($to);
                 }
 
                 copy($from, $to);
 
-                $this->image->setBaseFile($media['to']);
-                $this->image->saveFile();
+                // clean the cache only if we need to
+                if($cleanCache) {
+                    $this->image->setBaseFile($media['to']);
+                    $this->image->saveFile();
+                }
             }
         }
     }
