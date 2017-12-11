@@ -246,8 +246,8 @@ class Media extends AbstractHelper
      */
     public function deleteMediaFile($filePath)
     {
-        if (file_exists($filePath)) {
-            $absolutePath = rtrim($this->getMediaAbsolutePath(), '/').'/'.ltrim($filePath, '/');
+        $absolutePath = rtrim($this->directoryList->getPath('media'), '/').'/'.ltrim($filePath, '/');
+        if (file_exists($absolutePath)) {
             unlink($absolutePath);
         }
     }
