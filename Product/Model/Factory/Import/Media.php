@@ -406,7 +406,8 @@ class Media extends Factory
             }
 
             $this->image->setBaseFile($imageFile);
-            $this->image->saveFile();
+            $imagePath = $this->image->getNewFile();
+            $this->_mediaHelper->deleteMediaFile($imagePath);
         }
     }
 

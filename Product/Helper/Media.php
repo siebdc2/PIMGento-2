@@ -239,6 +239,20 @@ class Media extends AbstractHelper
     }
 
     /**
+     * Delete a file inside the Media folder
+     * Path should be relative to the media folder
+     *
+     * @param string $filePath
+     */
+    public function deleteMediaFile($filePath)
+    {
+        if (file_exists($filePath)) {
+            $absolutePath = rtrim($this->getMediaAbsolutePath(), '/').'/'.ltrim($filePath, '/');
+            unlink($absolutePath);
+        }
+    }
+
+    /**
      * Generate a list of resize types, that may be used for cache invalidation
      *
      * @return array
@@ -254,7 +268,7 @@ class Media extends AbstractHelper
             if (empty($themes)) {
                 foreach ($this->getFrontendModules() as $module) {
                     $this->imageResizeTypes = array_merge($this->imageResizeTypes, $this->viewConfig->getViewConfig([
-                        'area'  => 'frontend'
+                        'area' => 'frontend',
                     ])->getMediaEntities($module, 'images'));
                 }
             }
