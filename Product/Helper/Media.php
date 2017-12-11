@@ -6,6 +6,7 @@ use \Magento\Framework\App\Helper\AbstractHelper;
 use \Magento\Framework\App\Helper\Context;
 use \Magento\Framework\App\Filesystem\DirectoryList;
 use \Magento\Eav\Model\AttributeRepository;
+use \Magento\Framework\View\Config as ViewConfig;
 
 class Media extends AbstractHelper
 {
@@ -30,22 +31,36 @@ class Media extends AbstractHelper
     protected $mediaPath = '';
 
     /**
+     * @var ViewConfig
+     */
+    protected $viewConfig;
+
+    /**
+     * @var array
+     */
+    protected $imageResizeTypes;
+
+    /**
      * PHP Constructor
      *
      * @param Context             $context
      * @param DirectoryList       $directoryList
      * @param AttributeRepository $attributeRepository
+     * @param ViewConfig          $viewConfig
      */
     public function __construct(
         Context $context,
         DirectoryList $directoryList,
-        AttributeRepository $attributeRepository
-    ) {
+        AttributeRepository $attributeRepository,
+        ViewConfig $viewConfig
+    )
+    {
 
         parent::__construct($context);
 
         $this->directoryList = $directoryList;
         $this->attributeRepository = $attributeRepository;
+        $this->viewConfig = $viewConfig;
     }
 
     /**
@@ -57,32 +72,32 @@ class Media extends AbstractHelper
      */
     public function initHelper($currentImportFolder)
     {
-        $this->mediaPath = $this->directoryList->getPath('media') . '/catalog/product/';
+        $this->mediaPath = $this->directoryList->getPath('media').'/catalog/product/';
 
         $this->imageConfig = [
-            'fields' => [
-                'base_image' => [
+            'fields'      => [
+                'base_image'      => [
                     'columns'      => $this->getFieldDefinition('pimgento/image/base_image', false),
                     'attribute_id' => $this->getAttributeIdByCode('image'),
                 ],
-                'small_image' => [
-                    'columns' => $this->getFieldDefinition('pimgento/image/small_image', false),
+                'small_image'     => [
+                    'columns'      => $this->getFieldDefinition('pimgento/image/small_image', false),
                     'attribute_id' => $this->getAttributeIdByCode('small_image'),
                 ],
                 'thumbnail_image' => [
-                    'columns' => $this->getFieldDefinition('pimgento/image/thumbnail_image', false),
+                    'columns'      => $this->getFieldDefinition('pimgento/image/thumbnail_image', false),
                     'attribute_id' => $this->getAttributeIdByCode('thumbnail'),
                 ],
-                'swatch_image' => [
+                'swatch_image'    => [
                     'columns'      => $this->getFieldDefinition('pimgento/image/swatch_image', false),
                     'attribute_id' => $this->getAttributeIdByCode('swatch_image'),
                 ],
-                'gallery' => [
+                'gallery'         => [
                     'columns'      => $this->getFieldDefinition('pimgento/image/gallery_image', true),
                     'attribute_id' => null,
                 ],
             ],
-            'clean_files'      => (((int) $this->scopeConfig->getValue('pimgento/image/clean_files')) == 1),
+            'clean_files' => (((int)$this->scopeConfig->getValue('pimgento/image/clean_files')) == 1),
         ];
 
         // clean up empty fields
@@ -93,14 +108,14 @@ class Media extends AbstractHelper
         }
 
         // build import folder
-        $importFolder = $currentImportFolder . '/';
+        $importFolder = $currentImportFolder.'/';
         $value = trim($this->scopeConfig->getValue('pimgento/image/path'));
         if ($value) {
-            $importFolder.= $value.'/';
+            $importFolder .= $value.'/';
         }
         $this->imageConfig['import_folder'] = str_replace('//', '/', $importFolder);
 
-        $this->imageConfig['media_gallery_attribute_id'] = (int) $this->getAttributeIdByCode('media_gallery');
+        $this->imageConfig['media_gallery_attribute_id'] = (int)$this->getAttributeIdByCode('media_gallery');
     }
 
     /**
@@ -137,7 +152,7 @@ class Media extends AbstractHelper
      */
     protected function getAttributeIdByCode($code)
     {
-        return (int) $this->attributeRepository
+        return (int)$this->attributeRepository
             ->get('catalog_product', $code)
             ->getAttributeId();
     }
@@ -199,7 +214,7 @@ class Media extends AbstractHelper
      */
     public function cleanFiles()
     {
-        $folder = $this->getImportFolder() . 'files/';
+        $folder = $this->getImportFolder().'files/';
 
         if (is_dir($folder)) {
             $this->delTree($folder);
@@ -215,11 +230,69 @@ class Media extends AbstractHelper
      */
     protected function delTree($dir)
     {
-        $files = array_diff(scandir($dir), array('.', '..'));
+        $files = array_diff(scandir($dir), ['.', '..']);
         foreach ($files as $file) {
             (is_dir("$dir/$file")) ? $this->delTree("$dir/$file") : unlink("$dir/$file");
         }
 
         return rmdir($dir);
+    }
+
+    /**
+     * Generate a list of resize types, that may be used for cache invalidation
+     *
+     * @return array
+     */
+    public function getImageResizeTypes()
+    {
+        if (!isset($this->imageResizeTypes)) {
+
+            $this->imageResizeTypes = [];
+
+            $themes = $this->getFrontendThemes();
+
+            if (empty($themes)) {
+                foreach ($this->getFrontendModules() as $module) {
+                    $this->imageResizeTypes = array_merge($this->imageResizeTypes, $this->viewConfig->getViewConfig([
+                        'area'  => 'frontend'
+                    ])->getMediaEntities($module, 'images'));
+                }
+            }
+
+            foreach ($this->getFrontendThemes() as $theme) {
+                foreach ($this->getFrontendModules() as $module) {
+                    $this->imageResizeTypes = array_merge($this->imageResizeTypes, $this->viewConfig->getViewConfig([
+                        'area'  => 'frontend',
+                        'theme' => $theme,
+                    ])->getMediaEntities($module, 'images'));
+                }
+            }
+        }
+
+        return $this->imageResizeTypes;
+    }
+
+    /**
+     * List of all active theme using a view.xml file
+     * By default it will take the default theme, but feel free to override this
+     *
+     * @TODO there is a Magento issue about default behavior : https://github.com/magento/magento2/issues/12638
+     *
+     * @return array
+     */
+    protected function getFrontendThemes()
+    {
+        return [];
+    }
+
+    /**
+     * List of all active modules declared in view.xml file
+     * It seems that the value will always be Magento_Catalog, but feel free to override this
+     *
+     * @return array
+     */
+    protected function getFrontendModules()
+    {
+        return ['Magento_Catalog'];
     }
 }

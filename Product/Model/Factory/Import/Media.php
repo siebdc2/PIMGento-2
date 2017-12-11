@@ -53,7 +53,8 @@ class Media extends Factory
         mediaHelper $mediaHelper,
         Image $image,
         array $data = []
-    ) {
+    )
+    {
         parent::__construct($helperConfig, $eventManager, $moduleManager, $scopeConfig, $data);
 
         $this->_entities = $entities;
@@ -157,7 +158,7 @@ class Media extends Factory
     public function mediaPrepareValues($column, $attributeId, $position)
     {
         $connection = $this->_entities->getResource()->getConnection();
-        $tmpTable   = $this->_entities->getTableName($this->getCode());
+        $tmpTable = $this->_entities->getTableName($this->getCode());
         $tableMedia = $this->_entities->getTableName('media');
 
         if (is_null($attributeId)) {
@@ -173,7 +174,7 @@ class Media extends Factory
                     'attribute_id'   => new Expr($attributeId),
                     'store_id'       => new Expr('0'),
                     'media_original' => "t.$column",
-                    'position'       => new Expr($position)
+                    'position'       => new Expr($position),
                 ]
             )->where("`t`.`$column` <> ''");
 
@@ -234,6 +235,7 @@ class Media extends Factory
      *
      * @param string $tableName
      * @param string $columnId
+     *
      * @return int
      */
     public function mediaGetMaxId($tableName, $columnId)
@@ -243,12 +245,12 @@ class Media extends Factory
         $select = $connection->select()
             ->from(
                 ['t' => $tableName],
-                ['max_id'         => new Expr('MAX('.$columnId.')')]
+                ['max_id' => new Expr('MAX('.$columnId.')')]
             );
 
         $values = $connection->fetchAll($select);
 
-        return (int) $values[0]['max_id'];
+        return (int)$values[0]['max_id'];
 
     }
 
@@ -263,19 +265,19 @@ class Media extends Factory
         $tableMedia = $this->_entities->getTableName('media');
 
         $maxId = $this->mediaGetMaxId($tableMedia, 'id');
-        if ($maxId<1) {
+        if ($maxId < 1) {
             return;
         }
 
         $step = 5000;
-        for ($k=1; $k<=$maxId; $k+= $step) {
+        for ($k = 1; $k <= $maxId; $k += $step) {
             $min = $k;
             $max = $k + $step;
             $select = $connection->select()
                 ->from(
                     ['t' => $tableMedia],
                     [
-                        'id'    => 'id',
+                        'id'   => 'id',
                         'file' => 'media_original',
                     ]
                 )->where("id >= $min AND id < $max");
@@ -283,9 +285,9 @@ class Media extends Factory
 
             $idsToDelete = [];
             foreach ($medias as $media) {
-                $file = $this->_mediaHelper->getImportFolder() . $media['file'];
+                $file = $this->_mediaHelper->getImportFolder().$media['file'];
                 if (!is_file($file)) {
-                    $idsToDelete[] = (int) $media['id'];
+                    $idsToDelete[] = (int)$media['id'];
                 }
             }
 
@@ -306,12 +308,12 @@ class Media extends Factory
         $tableMedia = $this->_entities->getTableName('media');
 
         $maxId = $this->mediaGetMaxId($tableMedia, 'id');
-        if ($maxId<1) {
+        if ($maxId < 1) {
             return;
         }
 
         $step = 5000;
-        for ($k=1; $k<=$maxId; $k+= $step) {
+        for ($k = 1; $k <= $maxId; $k += $step) {
             $min = $k;
             $max = $k + $step;
             $select = $connection->select()
@@ -326,8 +328,8 @@ class Media extends Factory
                 );
             $medias = $connection->fetchAll($select);
             foreach ($medias as $media) {
-                $from = $this->_mediaHelper->getImportFolder() . $media['from'];
-                $to = $this->_mediaHelper->getMediaAbsolutePath() . $media['to'];
+                $from = rtrim($this->_mediaHelper->getImportFolder(), '/').'/'.ltrim($media['from'], '/');
+                $to = rtrim($this->_mediaHelper->getMediaAbsolutePath(), '/').'/'.ltrim($media['to'], '/');
                 $cleanCache = false;
 
                 // if it does not exist, we pass
@@ -351,11 +353,60 @@ class Media extends Factory
                 copy($from, $to);
 
                 // clean the cache only if we need to
-                if($cleanCache) {
-                    $this->image->setBaseFile($media['to']);
-                    $this->image->saveFile();
+                if ($cleanCache) {
+                    $this->clearImageCache($media['to']);
                 }
             }
+        }
+    }
+
+    /**
+     * Clear image resize cache for every defined types
+     *
+     * @param string $imageFile
+     */
+    protected function clearImageCache($imageFile)
+    {
+        foreach ($this->_mediaHelper->getImageResizeTypes() as $resizeType) {
+            if (array_key_exists('type', $resizeType)) {
+                $this->image->setDestinationSubdir($resizeType['type']);
+            }
+
+            // Used for the size folder
+            if (array_key_exists('width', $resizeType)) {
+                $this->image->setWidth($resizeType['width']);
+            }
+            if (array_key_exists('height', $resizeType)) {
+                $this->image->setHeight($resizeType['height']);
+            }
+
+            // Those parameters are used to calculate the hash in the file path
+            if (array_key_exists('aspect_ratio', $resizeType)) {
+                $this->image->setKeepAspectRatio($resizeType['aspect_ratio']);
+            }
+            if (array_key_exists('frame', $resizeType)) {
+                $this->image->setKeepFrame($resizeType['frame']);
+            }
+            if (array_key_exists('transparency', $resizeType)) {
+                $this->image->setKeepTransparency($resizeType['transparency']);
+            }
+            if (array_key_exists('constrain', $resizeType)) {
+                $this->image->setConstrainOnly($resizeType['constrain']);
+            }
+            if (array_key_exists('background', $resizeType)) {
+                $this->image->setBackgroundColor($resizeType['background']);
+            }
+
+            // Those does not exists in view.xsd ; only keeping them for reference, and maybe future usage ?
+            if (array_key_exists('quality', $resizeType)) {
+                $this->image->setQuality($resizeType['quality']);
+            }
+            if (array_key_exists('angle', $resizeType)) {
+                $this->image->setAngle($resizeType['angle']);
+            }
+
+            $this->image->setBaseFile($imageFile);
+            $this->image->saveFile();
         }
     }
 
@@ -401,7 +452,7 @@ class Media extends Factory
 
         // get the value id from gallery (for already existing medias)
         $maxId = $this->mediaGetMaxId($tableGallery, 'value_id');
-        for ($k=1; $k<=$maxId; $k+= $step) {
+        for ($k = 1; $k <= $maxId; $k += $step) {
             $min = $k;
             $max = $k + $step;
             // @todo use Zend methods for mass update
@@ -438,7 +489,7 @@ class Media extends Factory
 
         // get the value id from gallery (for new medias)
         $maxId = $this->mediaGetMaxId($tableGallery, 'value_id');
-        for ($k=1; $k<=$maxId; $k+= $step) {
+        for ($k = 1; $k <= $maxId; $k += $step) {
             $min = $k;
             $max = $k + $step;
             // @todo use Zend methods for mass update
@@ -459,15 +510,15 @@ class Media extends Factory
 
         // get the record id from gallery value (for new medias)
         $maxId = $this->mediaGetMaxId($tableGallery, 'record_id');
-        for ($k=1; $k<=$maxId; $k+= $step) {
+        for ($k = 1; $k <= $maxId; $k += $step) {
             $min = $k;
-            $max = $k+$step;
+            $max = $k + $step;
             // @todo use Zend methods for mass update
             $query = "
                 UPDATE $tableMedia, $tableGallery
                 SET $tableMedia.record_id = $tableGallery.record_id
                 WHERE $tableGallery.record_id >= $min AND $tableGallery.record_id < $max
-                AND $tableGallery." . $identifier . " = $tableMedia.entity_id
+                AND $tableGallery.".$identifier." = $tableMedia.entity_id
                 AND $tableGallery.value_id = $tableMedia.value_id
                 AND $tableGallery.store_id = $tableMedia.store_id
             ";
