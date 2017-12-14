@@ -26,6 +26,7 @@
       "Option/registration.php",
       "Product/registration.php",
       "Variant/registration.php",
+      "VariantFamily/registration.php",
       "Upgrade/registration.php"
     ],
     "psr-4": {
