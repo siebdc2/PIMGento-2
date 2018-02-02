@@ -2,7 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
-## [100.3.1] - 2017-01-12
+## [100.3.2] - 2018-02-02
+
+  * update: uploaded file timestamp
+
+## [100.3.1] - 2018-01-12
 
   * update: Improved image import performance
 
