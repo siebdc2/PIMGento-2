@@ -2,6 +2,8 @@
 
 PIMGento2 is a Magento 2 extension that allows you to import your catalog from Akeneo CSV files into Magento.
 
+You can discover PIMGento on the official website (https://www.pimgento.com/).
+
 ## Documentation
 
 PIMGento complete documentation is available [here](doc/summary.md).
