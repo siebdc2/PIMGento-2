@@ -184,7 +184,7 @@ class Import extends Factory
         $resource = $this->_entities->getResource();
         $connection = $resource->getConnection();
         $tmpTable = $this->_entities->getTableName($this->getCode());
-        $familyAttributeRelationsTable = 'pimgento_family_attribute_relations';
+        $familyAttributeRelationsTable = $resource->getTable('pimgento_family_attribute_relations');
 
         $connection->addColumn($tmpTable, '_attribute_set_id', 'TEXT NULL');
 
