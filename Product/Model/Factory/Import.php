@@ -1118,6 +1118,32 @@ class Import extends Factory
             );
         }
 
+        // Product model relations
+        if ($connection->tableColumnExists($tmpTable, 'RELATED-product_models')) {
+            $related[] = array(
+                'type_id' => Link::LINK_TYPE_RELATED,
+                'column'  => 'RELATED-product_models',
+            );
+        }
+        if ($connection->tableColumnExists($tmpTable, 'UPSELL-product_models')) {
+            $related[] = array(
+                'type_id' => Link::LINK_TYPE_UPSELL,
+                'column'  => 'UPSELL-product_models',
+            );
+        }
+        if ($connection->tableColumnExists($tmpTable, 'X_SELL-product_models')) {
+            $related[] = array(
+                'type_id' => Link::LINK_TYPE_CROSSSELL,
+                'column'  => 'X_SELL-product_models',
+            );
+        }
+        if ($connection->tableColumnExists($tmpTable, 'CROSSSELL-product_models')) {
+            $related[] = array(
+                'type_id' => Link::LINK_TYPE_CROSSSELL,
+                'column'  => 'CROSSSELL-product_models',
+            );
+        }
+
         // Product group relations
         if ($connection->tableColumnExists($tmpTable, 'RELATED-groups')) {
             $related[] = array(
