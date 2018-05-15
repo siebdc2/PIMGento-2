@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [100.3.3] - 2018-05-15
+
+  * fix: Missing call for pimgento_family_attribute_relations table
+  * fix: columns added for upsell / crosssell / related links
+
 ## [100.3.2] - 2018-02-02
 
   * update: uploaded file timestamp
