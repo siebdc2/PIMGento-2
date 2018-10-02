@@ -1,5 +1,8 @@
 # PIMGento2
 
+> This version of PIMGento2 connector will not be maintained anymore by the end of 2018.
+> We kindly invite you to visit the Github repository of the new PIMGento2 (API) connector (https://github.com/Agence-DnD/PIMGento-2-API).
+
 PIMGento2 is a Magento 2 extension that allows you to import your catalog from Akeneo CSV files into Magento.
 
 You can discover PIMGento on the official website (https://www.pimgento.com/).
