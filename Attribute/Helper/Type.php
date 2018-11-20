@@ -204,23 +204,48 @@ class Type extends AbstractHelper
     {
         $columns = array(
             'backend_type'   => [
-                'type'      => 'VARCHAR(255) NULL',
+                'type'      => [
+                    'type'     => 'text',
+                    'length'   => 255,
+                    'COMMENT'  => ' ',
+                    'nullable' => true
+                ],
                 'only_init' => true,
             ],
             'frontend_input' => [
-                'type'      => 'VARCHAR(255) NULL',
+                'type'      => [
+                    'type'     => 'text',
+                    'length'   => 255,
+                    'COMMENT'  => ' ',
+                    'nullable' => true
+                ],
                 'only_init' => true,
             ],
             'backend_model'  => [
-                'type'      => 'VARCHAR(255) NULL',
+                'type'      => [
+                    'type'     => 'text',
+                    'length'   => 255,
+                    'COMMENT'  => ' ',
+                    'nullable' => true
+                ],
                 'only_init' => true,
             ],
             'source_model'   => [
-                'type'      => 'VARCHAR(255) NULL',
+                'type'      => [
+                    'type'     => 'text',
+                    'length'   => 255,
+                    'COMMENT'  => ' ',
+                    'nullable' => true
+                ],
                 'only_init' => true,
             ],
             'frontend_model' => [
-                'type'      => 'VARCHAR(255) NULL',
+                'type'      => [
+                    'type'     => 'text',
+                    'length'   => 255,
+                    'COMMENT'  => ' ',
+                    'nullable' => true
+                ],
                 'only_init' => false,
             ],
         );
