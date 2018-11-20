@@ -123,11 +123,15 @@ class Import extends Factory
                 continue;
             }
 
-            $connection->addColumn($variantTable, $this->_columnName($column), 'TEXT');
+            $connection->addColumn($variantTable, $this->_columnName($column), 'text');
         }
 
         if (!$connection->tableColumnExists($tmpTable, 'axis')) {
-            $connection->addColumn($tmpTable, 'axis', 'VARCHAR(255)');
+            $connection->addColumn($tmpTable, 'axis', [
+                'type' => 'text',
+                'length' => 255,
+                'COMMENT' => ' ',
+            ]);
         }
     }
 
