@@ -98,7 +98,11 @@ class Import extends Factory
         $connection = $resource->getConnection();
         $tmpTable = $this->_entities->getTableName($this->getCode());
 
-        $connection->addColumn($tmpTable, '_axis', 'VARCHAR(255)');
+        $connection->addColumn($tmpTable, '_axis', [
+            'type' => 'text',
+            'length' => 255,
+            'COMMENT' => ' ',
+        ]);
 
         $columns = [];
         for ($i = 1; $i <= $this->_helperVariant->getMaxAxesNumber(); $i++) {

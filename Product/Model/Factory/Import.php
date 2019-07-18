@@ -170,15 +170,57 @@ class Import extends Factory
         $connection = $this->_entities->getResource()->getConnection();
         $tmpTable = $this->_entities->getTableName($this->getCode());
 
-        $connection->addColumn($tmpTable, '_type_id', 'VARCHAR(255) NOT NULL DEFAULT "simple"');
-        $connection->addColumn($tmpTable, '_options_container', 'VARCHAR(255) NOT NULL DEFAULT "container2"');
-        $connection->addColumn($tmpTable, '_tax_class_id', 'INT(11) NOT NULL DEFAULT 0'); // None
-        $connection->addColumn($tmpTable, '_attribute_set_id', 'INT(11) NOT NULL DEFAULT "4"'); // Default
-        $connection->addColumn($tmpTable, '_visibility', 'INT(11) NOT NULL DEFAULT "' . Visibility::VISIBILITY_BOTH . '"'); // catalog, search
-        $connection->addColumn($tmpTable, '_status', 'INT(11) NOT NULL DEFAULT "2"'); // Disabled
+        $connection->addColumn($tmpTable, '_type_id', [
+            'type' => 'text',
+            'length' => 255,
+            'default' => 'simple',
+            'COMMENT' => ' ',
+            'nullable' => false
+        ]);
+        $connection->addColumn($tmpTable, '_options_container', [
+            'type' => 'text',
+            'length' => 255,
+            'default' => 'container2',
+            'COMMENT' => ' ',
+            'nullable' => false
+        ]);
+        $connection->addColumn($tmpTable, '_tax_class_id', [
+            'type' => 'integer',
+            'length' => 11,
+            'default' => 0,
+            'COMMENT' => ' ',
+            'nullable' => false
+        ]); // None
+        $connection->addColumn($tmpTable, '_attribute_set_id', [
+            'type' => 'integer',
+            'length' => 11,
+            'default' => 4,
+            'COMMENT' => ' ',
+            'nullable' => false
+        ]); // Default
+        $connection->addColumn($tmpTable, '_visibility', [
+            'type' => 'integer',
+            'length' => 11,
+            'default' => Visibility::VISIBILITY_BOTH,
+            'COMMENT' => ' ',
+            'nullable' => false
+        ]); // catalog, search
+        $connection->addColumn($tmpTable, '_status', [
+            'type' => 'integer',
+            'length' => 11,
+            'default' => 2,
+            'COMMENT' => ' ',
+            'nullable' => false
+        ]); // Disabled
 
         if (!$connection->tableColumnExists($tmpTable, 'url_key')) {
-            $connection->addColumn($tmpTable, 'url_key', 'varchar(255) NOT NULL DEFAULT ""');
+            $connection->addColumn($tmpTable, 'url_key', [
+                'type' => 'text',
+                'length' => 255,
+                'default' => '',
+                'COMMENT' => ' ',
+                'nullable' => false
+            ]);
             $connection->update($tmpTable, array('url_key' => new Expr('LOWER(`sku`)')));
         }
 
@@ -265,8 +307,13 @@ class Import extends Factory
                 __('Columns groups or parent not found')
             );
         } else {
-            $connection->addColumn($tmpTable, '_children', 'TEXT NULL');
-            $connection->addColumn($tmpTable, '_axis', 'VARCHAR(255) NULL');
+            $connection->addColumn($tmpTable, '_children', 'text');
+            $connection->addColumn($tmpTable, '_axis', [
+                'type' => 'text',
+                'length' => 255,
+                'COMMENT' => ' ',
+                'nullable' => true
+            ]);
 
             $data = array(
                 'sku' => 'e.' . $groupColumn,

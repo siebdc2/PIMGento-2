@@ -124,7 +124,13 @@ class Import extends Factory
 
             if ($connection->tableColumnExists($tmpTable, 'label-' . $local)) {
 
-                $connection->addColumn($tmpTable, 'url_key-' . $local, 'VARCHAR(255) NOT NULL DEFAULT ""');
+                $connection->addColumn($tmpTable, 'url_key-' . $local, [
+                    'type' => 'text',
+                    'length' => 255,
+                    'default' => '',
+                    'COMMENT' => ' ',
+                    'nullable' => false
+                ]);
 
                 $select = $connection->select()
                     ->from($tmpTable, ['entity_id' => '_entity_id', 'name' => 'label-' . $local]);
@@ -172,9 +178,27 @@ class Import extends Factory
         $connection = $this->_entities->getResource()->getConnection();
         $tmpTable = $this->_entities->getTableName($this->getCode());
 
-        $connection->addColumn($tmpTable, 'level', 'INT(11) NOT NULL DEFAULT 0');
-        $connection->addColumn($tmpTable, 'path', 'VARCHAR(255) NOT NULL DEFAULT ""');
-        $connection->addColumn($tmpTable, 'parent_id', 'INT(11) NOT NULL DEFAULT 0');
+        $connection->addColumn($tmpTable, 'level', [
+            'type' => 'integer',
+            'length' => 11,
+            'default' => 0,
+            'COMMENT' => ' ',
+            'nullable' => false
+        ]);
+        $connection->addColumn($tmpTable, 'path', [
+            'type' => 'text',
+            'length' => 255,
+            'default' => '',
+            'COMMENT' => ' ',
+            'nullable' => false
+        ]);
+        $connection->addColumn($tmpTable, 'parent_id', [
+            'type' => 'integer',
+            'length' => 11,
+            'default' => 0,
+            'COMMENT' => ' ',
+            'nullable' => false
+        ]);
 
         $stores = $this->_helperConfig->getStores('lang');
 
@@ -189,7 +213,13 @@ class Import extends Factory
 
         foreach ($stores as $local => $affected) {
             if ($connection->tableColumnExists($tmpTable, 'url_key-' . $local)) {
-                $connection->addColumn($tmpTable, '_url_rewrite-' . $local, 'VARCHAR(255) NOT NULL DEFAULT ""');
+                $connection->addColumn($tmpTable, '_url_rewrite-' . $local, [
+                    'type' => 'text',
+                    'length' => 255,
+                    'default' => '',
+                    'COMMENT' => ' ',
+                    'nullable' => false
+                ]);
                 $updateRewrite[] = 'c1.`_url_rewrite-' . $local . '` =
                     IF(c1.`url_key-' . $local . '` <> "", TRIM(BOTH "/" FROM CONCAT(c2.`_url_rewrite-' . $local . '`, "/", c1.`url_key-' . $local . '`)), "")';
             }
@@ -217,7 +247,13 @@ class Import extends Factory
         $connection = $this->_entities->getResource()->getConnection();
         $tmpTable = $this->_entities->getTableName($this->getCode());
 
-        $connection->addColumn($tmpTable, 'position', 'INT(11) NOT NULL DEFAULT 0');
+        $connection->addColumn($tmpTable, 'position', [
+            'type' => 'integer',
+            'length' => 11,
+            'default' => 0,
+            'COMMENT' => ' ',
+            'nullable' => false
+        ]);
 
         $query = $connection->query(
             $connection->select()
