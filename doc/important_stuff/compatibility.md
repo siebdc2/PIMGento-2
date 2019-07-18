@@ -25,7 +25,7 @@ Magento2
 
 | Magento Version | PIMGento2 Version |
 |-----------------|-------------------|
-| =< 2.2.x        | master            |
+| =< 2.3.x        | master            |
 
 Upgrade from Magento 2.1 to 2.2
 -------------------------------
