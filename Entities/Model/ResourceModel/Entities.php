@@ -464,6 +464,7 @@ class Entities extends AbstractDb
     {
         $connection = $this->getConnection();
 
+        /** @var array $attribute */
         $attribute = $connection->fetchRow(
             $connection->select()
                 ->from($this->getTable('eav_attribute'), array('attribute_id', 'backend_type'))
@@ -471,7 +472,12 @@ class Entities extends AbstractDb
                 ->where('attribute_code = ?', $code)
                 ->limit(1)
         );
-        return count($attribute) ? $attribute : false;
+
+        if (empty($attribute)) {
+            return false;
+        }
+
+        return $attribute;
     }
 
     /**
